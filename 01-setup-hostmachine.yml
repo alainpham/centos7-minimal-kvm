@@ -65,6 +65,15 @@
         owner: root
         group: root
         mode: 0755
+    - name: copy scripts for ssh-ing into vms easily
+      copy: 
+        src: distrib/kvsh 
+        dest: /usr/local/sbin/kvsh
+        force: no
+        owner: root
+        group: root
+        mode: 0755
+
 
 - name: generate ssh key
   hosts: hostmachines

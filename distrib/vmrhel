@@ -87,12 +87,8 @@ MAC=$(virsh dumpxml $1 | awk -F\' '/mac address/ {print $2}')
         fi
     done
 
-# Eject cdrom
-echo "$(date -R) Cleaning up cloud-init..."
-virsh change-media $1 hda --eject --config
-
 # Remove the unnecessary cloud init files
-rm $USER_DATA $CI_ISO $META_DATA
+rm $USER_DATA $META_DATA
 
 echo "$(date -R) DONE. SSH to $1 using cloud-user@$IP , with  username 'cloud-user'."
 

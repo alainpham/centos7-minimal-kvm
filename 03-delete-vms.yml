@@ -1,0 +1,8 @@
+---
+- name: delete vms
+  hosts: hostmachines
+  tasks:
+    - include_tasks: tasks/delete_vm_task.yml
+      with_items: "{{guests}}"
+      loop_control:
+        loop_var: vm

@@ -1,0 +1,11 @@
+- name: create vm with virt-install
+  shell: vmrhel {{item.node_name}} {{item.ram_MB}} {{item.vcpus}} {{item.source_image}} {{item.mac_ip_suffix}} {{item.disk_size}} {{rhsub.user}} {{rhsub.pwd}}
+  args:
+    chdir: /virt/runtime/
+    creates: /virt/runtime/{{item.node_name}}.qcow2
+- name: Add host to host file
+  lineinfile: 
+    path: /etc/hosts 
+    regexp: '^.*192\.168\.122\.{{item.mac_ip_suffix}}.*$'
+    line: '192.168.122.{{item.mac_ip_suffix}} {{item.node_name}}'
+    state: present

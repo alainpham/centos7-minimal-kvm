@@ -1,0 +1,12 @@
+- name: check if image exists {{vm.node_name}}
+  stat: 
+    path: /virt/runtime/{{vm.node_name}}.qcow2
+  register: fexist
+- name: deleting vm with virtsh destroy undefine {{vm.node_name}}
+  shell: dvm {{vm.node_name}}
+  when: fexist.stat.exists == true
+- name: Remove host to host file {{vm.node_name}}
+  lineinfile: 
+    path: /etc/hosts 
+    regexp: '^.*192\.168\.122\.{{vm.mac_ip_suffix}}.*$'
+    state: absent

@@ -1,0 +1,7 @@
+---
+- name: provision guest vms
+  hosts: hostmachines
+  tasks:
+    - include_tasks: tasks/provision_vm_task.yml
+      with_items: "{{guests}}"
+      

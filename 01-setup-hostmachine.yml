@@ -1,0 +1,90 @@
+---
+- name: install packages
+  hosts: hostmachines
+  tasks: 
+    - name: update all
+      yum:
+        name: '*'
+        state: latest
+    - name: install essential packages
+      yum:
+        name: 
+          - qemu-kvm 
+          - libvirt 
+          - libvirt-client
+          - virt-install
+          - virt-manager
+          - virt-top
+          - ansible
+          - git
+          - wget
+          - libguestfs-tools-c
+          - qemu-img
+        state: latest
+
+- name: upload images and tools
+  hosts: hostmachines
+  tasks:
+    - name: create directy
+      file: path=/virt/images state=directory
+    - name: create directy
+      file: path=/virt/runtime state=directory
+    - name: upload rhel server
+      copy: src=distrib/rhel-server-7.4-update-4-x86_64-kvm.qcow2 dest=/virt/images/rhel.qcow2 force=no
+    - name: upload rhel atomic
+      copy: src=distrib/rhel-atomic-cloud-7.4.5-6.x86_64.qcow2 dest=/virt/images/atomic.qcow2 force=no
+    - name: copy scripts for rhel vm creation
+      copy: 
+        src: distrib/vmrhel 
+        dest: /usr/local/sbin/vmrhel 
+        force: no
+        owner: root
+        group: root
+        mode: 0755
+    - name: copy scripts for listing vms
+      copy: 
+        src: distrib/lsvm 
+        dest: /usr/local/sbin/lsvm 
+        force: no
+        owner: root
+        group: root
+        mode: 0755
+    - name: copy scripts for setting vm ips
+      copy: 
+        src: distrib/ntvm 
+        dest: /usr/local/sbin/ntvm
+        force: no
+        owner: root
+        group: root
+        mode: 0755
+    - name: copy scripts for deleting vms
+      copy: 
+        src: distrib/dvm 
+        dest: /usr/local/sbin/dvm
+        force: no
+        owner: root
+        group: root
+        mode: 0755
+
+- name: generate ssh key
+  hosts: hostmachines
+  tasks:
+    - name: check presence of id_rsa.pub
+      stat: 
+        path: ~/.ssh/id_rsa.pub
+      register: cert
+    - name: ssh-keygen of id_rsa.pub
+      shell: ssh-keygen -t rsa -f ~/.ssh/id_rsa -N ''
+      when: cert.stat.exists == False 
+      args:
+        creates: ~/.ssh/id_rsa
+
+- name: update /etc/hosts with kvm bridge interface
+  hosts: hostmachines
+  tasks:
+    - name: Add vmname to host file
+      lineinfile: 
+        path: /etc/hosts 
+        regexp: '^(.*)192\.168\.122\.1(.*)hostmachine(.*)$'
+        line: '192.168.122.1 hostmachine'
+        state: present

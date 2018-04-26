@@ -1,8 +1,17 @@
-- name: create vm with virt-install
-  shell: vmrhel {{item.node_name}} {{item.ram_MB}} {{item.vcpus}} {{item.source_image}} {{item.mac_ip_suffix}} {{item.disk_size}} {{rhsub.user}} {{rhsub.pwd}}
+- name: create vm with virt-install with subscription manager
+  shell: 'vmrhel {{item.node_name}} {{item.ram_MB}} {{item.vcpus}} {{item.source_image}} {{item.mac_ip_suffix}} {{item.disk_size}} {{rhsub.user}} {{rhsub.pwd}} {{rhsub.poolid}} &> {{item.node_name}}.log'
   args:
     chdir: /virt/runtime/
     creates: /virt/runtime/{{item.node_name}}.qcow2
+  when : item.subscribe
+
+- name: create vm with virt-install no subs
+  shell: 'vmrhel-no-sub {{item.node_name}} {{item.ram_MB}} {{item.vcpus}} {{item.source_image}} {{item.mac_ip_suffix}} {{item.disk_size}} &> {{item.node_name}}.log'
+  args:
+    chdir: /virt/runtime/
+    creates: /virt/runtime/{{item.node_name}}.qcow2
+  when : not item.subscribe
+
 - name: Add host to host file
   lineinfile: 
     path: /etc/hosts 

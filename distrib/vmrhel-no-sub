@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Take one argument from the commandline: VM name
-if ! [ $# -eq 9 ]; then
-    echo "Usage: $0 <node-name> <ram-MB> <vcpus> <source-image> <mac-ip-suffix> <disk-size> <rhsub-username> <rhsub-password> <poolid>"
+if ! [ $# -eq 6 ]; then
+    echo "Usage: $0 <node-name> <ram-MB> <vcpus> <source-image> <mac-ip-suffix> <disk-size>"
     exit 1
 fi
 
@@ -44,10 +44,6 @@ chpasswd:
      root:password
      cloud-user:password
   expire: False
-rh_subscription:
-  username: $7
-  password: $8
-  add-pool: [ '$9' ]
 _EOF_
 
 cat > $META_DATA << _EOF_

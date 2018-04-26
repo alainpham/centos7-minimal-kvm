@@ -1,2 +1,2 @@
 [hostmachines]
-apdemo ansible_connection=ssh ansible_user=root
+localhost ansible_host=localhost ansible_connection=ssh ansible_user=apham ansible_become=true

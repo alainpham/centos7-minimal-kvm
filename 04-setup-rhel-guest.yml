@@ -1,0 +1,44 @@
+---
+- name: install packages
+  hosts: classic
+  tasks:
+    - name: disable all repos
+      shell: subscription-manager repos --disable="*"
+      when : activate_remote_repo
+    - name: enable remote repos
+      shell: | 
+        subscription-manager repos \
+        --enable="rhel-7-server-rpms" \
+        --enable="rhel-7-server-extras-rpms" \
+        --enable="rhel-7-server-ose-3.9-rpms" \
+        --enable="rhel-7-fast-datapath-rpms" \
+        --enable="rhel-7-server-ansible-2.4-rpms" \
+        --enable="a-mq-clients-1-for-rhel-7-server-rpms" \
+        --enable="amq-interconnect-1-for-rhel-7-server-rpms"
+      when: activate_remote_repo
+    - name: enable local repos
+      get_url: 
+        url: "{{local_repo_file_url}}"
+        dest: /etc/yum.repos.d/local.repo
+      when: not activate_remote_repo
+    - name: update all
+      yum:
+        name: '*'
+        state: latest
+    - name: install essential packages
+      yum:
+        name: 
+          - wget
+          - git
+          - net-tools
+          - bind-utils
+          - iptables-services
+          - bridge-utils
+          - bash-completion
+          - kexec-tools
+          - sos
+          - psacct
+          - unzip
+          - zip
+          - java-1.8.0-openjdk-devel
+        state: latest

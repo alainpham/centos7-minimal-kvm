@@ -5,17 +5,82 @@ rhsub:
   poolid: POOLID
 
 guests:
-  - node_name: std1
-    ram_MB: 3072
-    vcpus: 2
-    source_image: rhel
-    mac_ip_suffix: 11
+  - node_name: bastion
+    ram_MB: 1024
+    vcpus: 1 
+    source_image: rhel 
+    mac_ip_suffix: 11 
     disk_size: 40G
     subscribe: false
-  - node_name: std2
+
+  - node_name: master1
+    ram_MB: 4096
+    vcpus: 2
+    source_image: atomic
+    mac_ip_suffix: 12
+    disk_size: 40G
+    subscribe: false
+
+  - node_name: master2
+    ram_MB: 4096
+    vcpus: 2
+    source_image: atomic
+    mac_ip_suffix: 13
+    disk_size: 40G
+    subscribe: false
+
+  - node_name: master3
+    ram_MB: 4096
+    vcpus: 2
+    source_image: atomic
+    mac_ip_suffix: 14
+    disk_size: 40G
+    subscribe: false
+
+  - node_name: infra1
     ram_MB: 3072
     vcpus: 2
+    source_image: atomic
+    mac_ip_suffix: 15
+    disk_size: 40G
+    subscribe: false
+
+  - node_name: infra2
+    ram_MB: 3072
+    vcpus: 2
+    source_image: atomic
+    mac_ip_suffix: 16
+    disk_size: 40G
+    subscribe: false
+
+  - node_name: node1
+    ram_MB: 6144
+    vcpus: 2
+    source_image: atomic
+    mac_ip_suffix: 16
+    disk_size: 40G
+    subscribe: false
+
+  - node_name: node2
+    ram_MB: 6144
+    vcpus: 2
+    source_image: atomic
+    mac_ip_suffix: 17
+    disk_size: 40G
+    subscribe: false
+  
+  - node_name: std1
+    ram_MB: 6144
+    vcpus: 2
     source_image: rhel
-    mac_ip_suffix: 12
+    mac_ip_suffix: 31
+    disk_size: 40G
+    subscribe: false
+
+  - node_name: std2
+    ram_MB: 6144
+    vcpus: 2
+    source_image: rhel
+    mac_ip_suffix: 32
     disk_size: 40G
     subscribe: false

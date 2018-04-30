@@ -57,7 +57,7 @@ guests:
     ram_MB: 6144
     vcpus: 2
     source_image: atomic
-    mac_ip_suffix: 16
+    mac_ip_suffix: 17
     disk_size: 40G
     subscribe: false
 
@@ -65,7 +65,7 @@ guests:
     ram_MB: 6144
     vcpus: 2
     source_image: atomic
-    mac_ip_suffix: 17
+    mac_ip_suffix: 18
     disk_size: 40G
     subscribe: false
   

@@ -1,2 +1,2 @@
 [hostmachines]
-localhost ansible_host=local ansible_become=true
+localhost ansible_connection=local ansible_become=true

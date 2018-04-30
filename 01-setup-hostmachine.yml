@@ -33,7 +33,7 @@
     - name: upload rhel server
       copy: src=distrib/rhel-server-7.5-x86_64-kvm.qcow2 dest=/virt/images/rhel.qcow2 force=no
     - name: upload rhel atomic
-      copy: src=distrib/rhel-atomic-cloud-7.4.5-6.x86_64.qcow2 dest=/virt/images/atomic.qcow2 force=no
+      copy: src=distrib/rhel-atomic-cloud-7.5.0-8.x86_64.qcow2 dest=/virt/images/atomic.qcow2 force=no
     - name: copy scripts for rhel vm creation
       copy: 
         src: distrib/vmrhel 

@@ -21,6 +21,7 @@
           - wget
           - libguestfs-tools-c
           - qemu-img
+          - maven
         state: latest
 
 - name: upload images and tools

@@ -42,5 +42,5 @@
           - unzip
           - zip
           - java-1.8.0-openjdk-devel
-	  - maven
+          - maven
         state: latest

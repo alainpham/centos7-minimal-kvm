@@ -1,19 +1,5 @@
-[bastionhost]
-bastion ansible_connection=ssh ansible_user=cloud-user ansible_become=true
-
-[master]
-master1 ansible_connection=ssh ansible_user=cloud-user ansible_become=true
-master2 ansible_connection=ssh ansible_user=cloud-user ansible_become=true
-master3 ansible_connection=ssh ansible_user=cloud-user ansible_become=true
-
-[infra]
-infra1 ansible_connection=ssh ansible_user=cloud-user ansible_become=true
-infra2 ansible_connection=ssh ansible_user=cloud-user ansible_become=true
-
-[node]
-node1 ansible_connection=ssh ansible_user=cloud-user ansible_become=true
-node2 ansible_connection=ssh ansible_user=cloud-user ansible_become=true
 
 [classic]
+prime ansible_connection=ssh ansible_user=cloud-user ansible_become=true
 std1 ansible_connection=ssh ansible_user=cloud-user ansible_become=true
 std2 ansible_connection=ssh ansible_user=cloud-user ansible_become=true

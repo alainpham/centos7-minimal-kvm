@@ -67,11 +67,11 @@ echo "$(date -R) Installing the domain and adjusting the configuration..."
 
 echo "virt-install --import --name $1 --ram $MEM --vcpus $CPUS --disk \
     /virt/runtime/$DISK,format=qcow2,bus=virtio --disk $CI_ISO,device=cdrom --network \
-    bridge=$BRIDGE,model=virtio,mac=$MAC --os-type=linux --os-variant=rhel7 --noautoconsole"
+    bridge=$BRIDGE,model=virtio,mac=$MAC --os-type=linux --os-variant=rhel7 --noautoconsole --cpu host-passthrough"
 
 virt-install --import --name $1 --ram $MEM --vcpus $CPUS --disk \
     /virt/runtime/$DISK,format=qcow2,bus=virtio --disk $CI_ISO,device=cdrom --network \
-    bridge=$BRIDGE,model=virtio,mac=$MAC --os-type=linux --os-variant=rhel7 --noautoconsole
+    bridge=$BRIDGE,model=virtio,mac=$MAC --os-type=linux --os-variant=rhel7 --noautoconsole --cpu host-passthrough
 
 counter=0
 MAC=$(virsh dumpxml $1 | awk -F\' '/mac address/ {print $2}')

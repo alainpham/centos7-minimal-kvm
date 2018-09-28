@@ -1,6 +1,9 @@
+- debug:
+    msg: "/virt/runtime/{{vm.node_name}}.qcow2"
 - name: check if image exists {{vm.node_name}}
   stat: 
     path: /virt/runtime/{{vm.node_name}}.qcow2
+    get_checksum: false
   register: fexist
 - name: deleting vm with virtsh destroy undefine {{vm.node_name}}
   shell: dvm {{vm.node_name}}

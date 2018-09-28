@@ -7,7 +7,7 @@ rhsub:
 guests:
   - node_name: prime
     ram_MB: 32768
-    vcpus: 4 
+    vcpus: 8 
     source_image: rhel 
     mac_ip_suffix: 11 
     disk_size: 120G

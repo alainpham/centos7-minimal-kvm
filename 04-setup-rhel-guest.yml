@@ -43,4 +43,6 @@
           - zip
           - java-1.8.0-openjdk-devel
           - maven
+          - ansible
+          - httpd-tools
         state: latest

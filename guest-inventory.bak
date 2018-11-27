@@ -1,0 +1,5 @@
+
+[classic]
+prime ansible_connection=ssh ansible_user=cloud-user ansible_become=true
+std1 ansible_connection=ssh ansible_user=cloud-user ansible_become=true
+std2 ansible_connection=ssh ansible_user=cloud-user ansible_become=true

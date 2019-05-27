@@ -12,3 +12,10 @@ guests:
     mac_ip_suffix: 11 
     disk_size: 120G
     subscribe: false
+  - node_name: bee
+    ram_MB: 40960
+    vcpus: 8 
+    source_image: rhel76
+    mac_ip_suffix: 12
+    disk_size: 120G
+    subscribe: false

@@ -11,9 +11,9 @@
         --enable="rhel-7-server-rpms" \
         --enable="rhel-7-server-extras-rpms" \
         --enable="rhel-7-server-optional-rpms" \
-        --enable="rhel-7-server-ose-3.9-rpms" \
+        --enable="rhel-7-server-ose-3.11-rpms" \
         --enable="rhel-7-fast-datapath-rpms" \
-        --enable="rhel-7-server-ansible-2.4-rpms" \
+        --enable="rhel-7-server-ansible-2.6-rpms" \
         --enable="a-mq-clients-1-for-rhel-7-server-rpms" \
         --enable="amq-interconnect-1-for-rhel-7-server-rpms"
       when: activate_remote_repo

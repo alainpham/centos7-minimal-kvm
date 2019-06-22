@@ -1,0 +1,28 @@
+---
+rhsub:
+  user: USER
+  pwd: PASSWORD
+  poolid: POOLID
+
+guests:
+  - node_name: prime
+    ram_MB: 40960
+    vcpus: 8 
+    source_image: rhel 
+    mac_ip_suffix: 11 
+    disk_size: 120G
+    subscribe: false
+  - node_name: bee
+    ram_MB: 40960
+    vcpus: 8 
+    source_image: rhel76
+    mac_ip_suffix: 12
+    disk_size: 120G
+    subscribe: false
+  - node_name: alpha
+    ram_MB: 40960
+    vcpus: 8 
+    source_image: centos71905
+    mac_ip_suffix: 13
+    disk_size: 120G
+    subscribe: false

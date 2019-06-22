@@ -39,6 +39,13 @@ cat > $USER_DATA << _EOF_
 ssh_pwauth: True
 ssh_authorized_keys:
 - $SSH_PUB_KEY
+users:
+  - name: cloud-user
+    gecos: cloud-user
+    lock-passwd: false
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    ssh_authorized_keys:
+      - $SSH_PUB_KEY
 chpasswd:
   list: |
      root:password

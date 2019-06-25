@@ -85,7 +85,7 @@ update-ca-trust extract
 
 ## From this point we will set the image registry url
 
-We set the registry url and get an auth token (must be as cluster-admin)
+We set the registry url and get an auth token (must be as cluster-admin) and we also set the crediantials for registry.redhat.io with user and pass.
 
 ```
 REGISTRY="$(oc get route docker-registry -n default -o 'jsonpath={.spec.host}')"

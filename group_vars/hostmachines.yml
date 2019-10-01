@@ -5,10 +5,17 @@ rhsub:
   poolid: POOLID
 
 guests:
-  - node_name: alpha
-    ram_MB: 8192
+  - node_name: prime
+    ram_MB: 45056
     vcpus: 8 
-    source_image: centos71905
-    mac_ip_suffix: 13
+    source_image: rhel77u1
+    mac_ip_suffix: 10
+    disk_size: 120G
+    subscribe: false
+  - node_name: bastion
+    ram_MB: 1024
+    vcpus: 2 
+    source_image: rhel77u1
+    mac_ip_suffix: 20
     disk_size: 120G
     subscribe: false

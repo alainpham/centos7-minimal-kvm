@@ -44,6 +44,8 @@ cd installcentos
 ./install-openshift.sh
 ```
 
+# Install Openshift Enterprise
+
 ## Add elasticsearch & kibana
 ```
 oc project openshift-logging
@@ -105,11 +107,14 @@ Credentials to registry.redhat.io are required here to use these enterprise imag
 
 ```
 srcreg="docker://registry.redhat.io/"
-tag="1.3"
+tag="1.4"
 ns="fuse7/"
 origpfx=fuse-
 targetpfx=fuse7-
-imglist="java-openshift karaf-openshift eap-openshift console"
+imglist="java-openshift console"
+
+#Full list below
+#imglist="java-openshift karaf-openshift eap-openshift console"
 
 for img in $imglist
 do
@@ -119,7 +124,7 @@ done
 
 for img in $imglist
 do
- echo $srcreg$ns$origpfx$img:$tag
+ echo docker://$REGISTRY/openshift/$targetpfx$img:$tag
  skopeo --insecure-policy copy --dest-creds=$ocuser:$octoken oci:./target:$ns$origpfx$img:$tag docker://$REGISTRY/openshift/$targetpfx$img:$tag
 done
 ```
@@ -130,7 +135,7 @@ Credentials to registry.redhat.io are required here to use these enterprise imag
 
 ```
 srcreg="docker://registry.redhat.io/"
-tag="1.3"
+tag="1.4"
 ns="fuse7/"
 origpfx=fuse-
 targetsfx=-ui
@@ -144,7 +149,7 @@ done
 
 for img in $imglist
 do
- echo $srcreg$ns$origpfx$img:$tag
+ echo docker://$REGISTRY/openshift/$img$targetsfx:$tag
  skopeo --insecure-policy copy --dest-creds=$ocuser:$octoken oci:./target:$ns$origpfx$img:$tag docker://$REGISTRY/openshift/$img$targetsfx:$tag
 done
 
@@ -156,7 +161,7 @@ Credentials to registry.redhat.io are required here to use these enterprise imag
 
 ```
 srcreg="docker://registry.redhat.io/"
-tag="1.3"
+tag="1.4"
 ns="fuse7/"
 origpfx=fuse-
 targetpfx=fuse-
@@ -170,7 +175,7 @@ done
 
 for img in $imglist
 do
- echo $srcreg$ns$origpfx$img:$tag
+ echo docker://$REGISTRY/openshift/$targetpfx$img:$tag
  skopeo --insecure-policy copy --dest-creds=$ocuser:$octoken oci:./target:$ns$origpfx$img:$tag docker://$REGISTRY/openshift/$targetpfx$img:$tag
 done
 ```
@@ -181,9 +186,33 @@ Credentials to registry.redhat.io are required here to use these enterprise imag
 
 ```
 srcreg="docker://registry.redhat.io/"
-tag="7.3"
-ns="amq-broker-7/"
-imglist="amq-broker-73-openshift"
+tag="7.4"
+ns="amq7/"
+imglist="amq-broker"
+
+for img in $imglist
+do
+ echo $srcreg$ns$img:$tag
+ skopeo copy --screds $user:$pass $srcreg$ns$img:$tag oci:./target:$ns$img:$tag
+done
+
+for img in $imglist
+do
+ echo docker://$REGISTRY/openshift/$img:$tag
+ skopeo --insecure-policy copy --dest-creds=$ocuser:$octoken oci:./target:$ns$img:$tag docker://$REGISTRY/openshift/$img:$tag
+done
+
+```
+
+## Downloading AMQ Streams Strimzi images with Skopeo
+
+Credentials to registry.redhat.io are required here to use these enterprise images.
+
+```
+srcreg="docker://registry.redhat.io/"
+tag="1.2.0"
+ns="amq7/"
+imglist="amq-streams-operator amq-streams-bridge amq-streams-kafka-22"
 
 for img in $imglist
 do
@@ -199,13 +228,56 @@ done
 
 ```
 
+STREAMS 1.1 Credentials to registry.redhat.io are required here to use these enterprise images.
+
+```
+srcreg="docker://registry.redhat.io/"
+tag="1.1.0"
+ns="amq7/"
+imglist="amq-streams-cluster-operator amq-streams-topic-operator amq-streams-user-operator amq-streams-kafka-init amq-streams-zookeeper-stunnel amq-streams-kafka-stunnel amq-streams-entity-operator-stunnel"
+
+for img in $imglist
+do
+ echo $srcreg$ns$img:$tag
+ skopeo copy --screds $user:$pass $srcreg$ns$img:$tag oci:./target:$ns$img:$tag
+done
+
+for img in $imglist
+do
+ echo $srcreg$ns$img:$tag
+ skopeo --insecure-policy copy --dest-creds=$ocuser:$octoken oci:./target:$ns$img:$tag docker://$REGISTRY/openshift/$img:$tag
+done
+
+```
+
+```
+srcreg="docker://registry.redhat.io/"
+tag="1.1.0-kafka-2.1.1"
+ns="amq7/"
+imglist="amq-streams-zookeeper amq-streams-kafka amq-streams-kafka-connect amq-streams-kafka-connect-s2i amq-streams-kafka-mirror-maker"
+
+for img in $imglist
+do
+ echo $srcreg$ns$img:$tag
+ skopeo copy --screds $user:$pass $srcreg$ns$img:$tag oci:./target:$ns$img:$tag
+done
+
+for img in $imglist
+do
+ echo $srcreg$ns$img:$tag
+ skopeo --insecure-policy copy --dest-creds=$ocuser:$octoken oci:./target:$ns$img:$tag docker://$REGISTRY/openshift/$img:$tag
+done
+
+```
+
+
 ## Downloading AMQ Interconnect images with Skopeo
 
 Credentials to registry.redhat.io registry are required here to use these enterprise images.
 
 ```
 srcreg="docker://registry.redhat.io/"
-tag="1.4"
+tag="1.5"
 ns="amq7/"
 imglist="amq-interconnect"
 
@@ -222,11 +294,36 @@ do
 done
 ```
 
+## Downloading Monitoring images with Skopeo
+
+Credentials to registry.redhat.io registry are required here to use these enterprise images.
+
+```
+srcreg="docker://registry.redhat.io/"
+tag="v3.11"
+ns="openshift3/"
+imglist="ose-logging-elasticsearch5 ose-logging-kibana5 prometheus grafana"
+
+for img in $imglist
+do
+ echo $srcreg$ns$img:$tag
+ skopeo copy --screds $user:$pass $srcreg$ns$img:$tag oci:./target:$ns$img:$tag
+done
+
+for img in $imglist
+do
+ echo $srcreg$ns$img:$tag
+ skopeo --insecure-policy copy --dest-creds=$ocuser:$octoken oci:./target:$ns$img:$tag docker://$REGISTRY/openshift/$img:$tag
+done
+```
+
+
 # Create Fuse application templates
 
 
 ```
-BASEURL=https://raw.githubusercontent.com/jboss-fuse/application-templates/application-templates-2.1.fuse-730065-redhat-00002
+BASEURL=https://raw.githubusercontent.com/jboss-fuse/application-templates/application-templates-2.1.fuse-740025-redhat-00003
+
 
 for template in eap-camel-amq-template.json \
  eap-camel-cdi-template.json \
@@ -242,7 +339,6 @@ for template in eap-camel-amq-template.json \
  spring-boot-camel-drools-template.json \
  spring-boot-camel-infinispan-template.json \
  spring-boot-camel-rest-sql-template.json \
- spring-boot-camel-teiid-template.json \
  spring-boot-camel-template.json \
  spring-boot-camel-xa-template.json \
  spring-boot-camel-xml-template.json \
@@ -250,7 +346,7 @@ for template in eap-camel-amq-template.json \
  spring-boot-cxf-jaxws-template.json ;
  do
  oc create -n openshift -f \
- ${BASEURL}/quickstarts/${template}
+ https://raw.githubusercontent.com/jboss-fuse/application-templates/application-templates-2.1.fuse-740025-redhat-00003/quickstarts/${template}
  done
 
 oc create -n openshift -f ${BASEURL}/fis-console-cluster-template.json
@@ -266,7 +362,7 @@ oc create -n openshift -f ${BASEURL}/fuse-apicurito.yml
 ```
 oc new-project apps-prod
 oc new-project apps
-oc new-app fuse73-console
+oc new-app fuse74-console
 ```
 
 # Deploy devops stuff
@@ -301,7 +397,7 @@ oc adm policy add-cluster-role-to-user cluster-admin system:serviceaccount:devop
 
 oc create -f https://raw.githubusercontent.com/microcks/microcks/master/install/openshift/openshift-persistent-full-template.yml -n openshift
 
-oc new-app --template=microcks-persistent --param=APP_ROUTE_HOSTNAME=microcks-devops.app.88.198.65.4.nip.io --param=KEYCLOAK_ROUTE_HOSTNAME=keycloak-devops.app.88.198.65.4.nip.io --param=OPENSHIFT_MASTER=https://console.88.198.65.4.nip.io:8443 --param=OPENSHIFT_OAUTH_CLIENT_NAME=microcks-client
+oc new-app --template=microcks-persistent --param=APP_ROUTE_HOSTNAME=microcks-devops.app.88.198.65.4.nip.io --param=KEYCLOAK_ROUTE_HOSTNAME=keycloak-devops.app.88.198.65.4.nip.io --param=OPENSHIFT_MASTER=https://console.88.198.65.4.nip.io:8443 --param=OPENSHIFT_OAUTH_CLIENT_NAME=microcks-client -n devops
 
 ```
 
